@@ -1,0 +1,49 @@
+<h2 class="title">Book Management System</h2>
+
+<div *ngIf="message" class="message">{{ message }}</div>
+
+<div class="container">
+ 
+  <div class="form-card">
+    <h3>{{ isEditMode ? 'Edit Book' : 'Add New Book' }}</h3>
+    <form (ngSubmit)="submitForm()">
+      <input [(ngModel)]="bookForm.title" name="title" placeholder="Title" required>
+      <input [(ngModel)]="bookForm.author" name="author" placeholder="Author" required>
+      <input [(ngModel)]="bookForm.isbn" name="isbn" placeholder="ISBN" required>
+      <input [(ngModel)]="bookForm.publicationDate" name="date" type="date" required>
+
+      <div class="button-group">
+        <button type="submit" class="btn submit-btn">{{ isEditMode ? 'Update' : 'Add' }}</button>
+        <button type="button" class="btn cancel-btn" *ngIf="isEditMode" (click)="cancelEdit()">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+
+  <div class="table-card">
+    <h3>Book List</h3>
+    <table class="book-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>ISBN</th>
+          <th>Publication Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let book of books">
+          <td>{{ book.title }}</td>
+          <td>{{ book.author }}</td>
+          <td>{{ book.isbn }}</td>
+          <td>{{ book.publicationDate | date:'yyyy-MM-dd' }}</td>
+          <td>
+            <button type="button" class="btn edit-btn" (click)="startEdit(book)">Edit</button>
+            <button type="button" class="btn delete-btn" (click)="deleteBook(book.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
